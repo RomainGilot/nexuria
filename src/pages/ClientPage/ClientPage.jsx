@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { Breadcrumb } from "../../components/Breadcrumb/Breadcrumb";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { NotificationSuccess } from "../../components/NotificationSuccess/NotificationSuccess";
 
 const breadcrumbItems = [
@@ -27,8 +25,6 @@ export function ClientPage() {
 
   return (
     <>
-      <NotificationSuccess title="Nouveau Client !" message="Vous avez ajouté un nouveau client" />
-
       <Breadcrumb items={breadcrumbItems} />
       <div className="md:justify-between mt-5 mb-5">
         <div className="min-w-0 flex-1">
@@ -53,7 +49,7 @@ export function ClientPage() {
           </svg>
           Export .xlsx
         </button>
-      </div>
+      </div>    
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -79,7 +75,7 @@ export function ClientPage() {
                         <svg className="h-1.5 w-1.5 fill-red-400" viewBox="0 0 6 6" aria-hidden="true">
                           <circle cx={3} cy={3} r={3} />
                         </svg>
-                        CL_00{client.code_client}
+                        CL_0{client.code_client}
                       </span>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{client.prenom} {client.nom}</td>

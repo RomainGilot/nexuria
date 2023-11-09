@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Breadcrumb } from "../../components/Breadcrumb/Breadcrumb";
+import ModalCreateClient from "../../components/ModalClient/ModalClient";
+import { FormAddClient } from "../../components/FormAddClient/FormAddClient";
 
 export function AccountClientPage({page}) {
   const [clientInfo, setClientInfo] = useState(null);
@@ -26,9 +28,18 @@ export function AccountClientPage({page}) {
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
-      <div className="mt-4 overflow-hidden rounded-lg ">
-        <p className="text-2xl mt-4">Compte de {clientInfo.prenom + " " + clientInfo.nom} </p>
+      <form className="mt-4 overflow-hidden rounded-lg ">
+        <p className="text-2xl mt-4">Compte de {clientInfo ? clientInfo.prenom + " " + clientInfo.nom : ""} </p>
           <div className="sm:p-6">
+         <div className="flex">
+           <button type='button' className={`mt-2 me-5 bg-orange-300 hover:bg-orange-400 text-orange-800 text-sm font-bold py-2 px-4 rounded inline-flex items-center`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            <span>Modifier</span>
+          </button>
+            <ModalCreateClient result="valider" colorButton="green" title="Valider la modification du compte" buttonLabel="Valider"/>
+         </div>
             <div className="flex flex-wrap">
               <div className="mt-4 overflow-hidden w-full sm:w-2/5 me-3 rounded-lg bg-gray-100">
                 <div className="px-4 py-5 sm:p-6">
@@ -40,57 +51,15 @@ export function AccountClientPage({page}) {
                       <label htmlFor="code_client" className="block text-sm font-medium leading-6 text-gray-900">Code client <span className="text-red-500">*</span></label>
                     </div>
                     <div className="mt-2 ml-5 w-1/6">
-                      <input value={clientInfo.code_client} disabled type="text" name="code_client" id="code_client" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Code client"/>
+                      <input value={clientInfo ? clientInfo.code_client : ""} disabled type="text" name="code_client" id="code_client" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Code client"/>
                     </div>
                   </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="prenom" className="block text-sm font-medium leading-6 text-gray-900">Prénom <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.prenom} required type="text" name="prenom" id="prenom" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Prénom" />
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="nom" className="block text-sm font-medium leading-6 text-gray-900">Nom <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.nom} required type="text" name="nom" id="nom" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Nom"/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="adresse" className="block text-sm font-medium leading-6 text-gray-900">Adresse</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.adresse} type="text" name="adresse" id="adresse" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Adresse" />
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="code_postal" className="block text-sm font-medium leading-6 text-gray-900">Code Postal</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.code_postal} type="text" name="code_postal" id="code_postal" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Code Postal"/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="ville" className="block text-sm font-medium leading-6 text-gray-900">Ville <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.ville} required type="text" name="ville" id="ville" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Ville" />
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="pays" className="block text-sm font-medium leading-6 text-gray-900">Pays</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.pays} type="text" name="pays" id="pays" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Pays" />
-                    </div>
-                  </div>
+                  <FormAddClient name="prenom" label="Prénom" formData={clientInfo ? clientInfo.prenom : ""} required />
+                  <FormAddClient name="nom" label="Nom" formData={clientInfo ? clientInfo.nom : ""} required/>
+                  <FormAddClient name="adresse" label="Adresse" formData={clientInfo ? clientInfo.adresse : ""}/>
+                  <FormAddClient name="code_postal" label="Code Postal" formData={clientInfo ? clientInfo.code_postal : ""}/>
+                  <FormAddClient name="ville" label="Ville" formData={clientInfo ? clientInfo.ville : ""} required/>
+                  <FormAddClient name="pays" label="Pays" formData={clientInfo ? clientInfo.pays : ""}/>
                 </div>
               </div>
               <div className="mt-4 overflow-hidden w-full sm:w-2/5 me-3 rounded-lg">
@@ -103,7 +72,7 @@ export function AccountClientPage({page}) {
                       <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Courriel <span className="text-red-500">*</span></label>
                     </div>
                     <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.email} required type="text" name="email" id="email" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Adresse Email" />
+                      <input disabled value={clientInfo ? clientInfo.email : ""} required type="text" name="email" id="email" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Adresse Email" />
                     </div>
                   </div>
                   <div className="mt-2 flex items-center">
@@ -111,7 +80,7 @@ export function AccountClientPage({page}) {
                       <label htmlFor="telephone1" className="block text-sm font-medium leading-6 text-gray-900">Téléphone 1 <span className="text-red-500">*</span></label>
                     </div>
                     <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.telephone1} required type="text" name="telephone1" id="telephone1" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 1" />
+                      <input disabled value={clientInfo ? clientInfo.telephone1 : ""} required type="text" name="telephone1" id="telephone1" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 1" />
                     </div>
                   </div>
                   <div className="mt-2 flex items-center">
@@ -119,7 +88,7 @@ export function AccountClientPage({page}) {
                       <label htmlFor="telephone2" className="block text-sm font-medium leading-6 text-gray-900">Téléphone 2</label>
                     </div>
                     <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.telephone2} type="text" name="telephone2" id="telephone2" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 2" />
+                      <input disabled value={clientInfo ? clientInfo.telephone2 : ""} type="text" name="telephone2" id="telephone2" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 2" />
                     </div>
                   </div>
                   <div className="mt-2 flex items-center">
@@ -127,7 +96,7 @@ export function AccountClientPage({page}) {
                       <label htmlFor="fax" className="block text-sm font-medium leading-6 text-gray-900">Fax</label>
                     </div>
                     <div className="mt-2 ml-5 w-1/6">
-                      <input disabled value={clientInfo.fax} type="text" name="fax" id="fax" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Fax" />
+                      <input disabled value={clientInfo ? clientInfo.fax : ""} type="text" name="fax" id="fax" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Fax" />
                     </div>
                   </div>
                 </div>
@@ -155,7 +124,7 @@ export function AccountClientPage({page}) {
               </div>
             </div>
           </div>
-      </div>
+      </form>
     </>
   )
 }

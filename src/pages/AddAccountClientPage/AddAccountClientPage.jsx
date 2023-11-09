@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Breadcrumb } from "../../components/Breadcrumb/Breadcrumb";
-import ModalCreateClient from "../../components/ModalCreateClient/ModalCreateClient";
+import ModalCreateClient from "../../components/ModalClient/ModalClient";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FormAddClient } from "../../components/FormAddClient/FormAddClient";
 
 const breadcrumbItems = [
   { to: "/", label: "Tableau de bord" },
@@ -95,7 +96,7 @@ export function AddAccountClientPage({ page }) {
       <div className="mt-4 overflow-hidden rounded-lg ">
         <p className="text-2xl mt-4">Création du client</p>
           <div className="sm:p-6">
-            <ModalCreateClient clickAction={handleFormSubmit} />
+            <ModalCreateClient result="créer" buttonLabel="Enregistrer" colorButton="red" title="Ajouter un compte" clickAction={handleFormSubmit} />
             <div className="flex flex-wrap">
               <div className="mt-4 overflow-hidden w-full sm:w-2/5 me-3 rounded-lg bg-gray-100">
                 <div className="px-4 py-5 sm:p-6">
@@ -110,54 +111,12 @@ export function AddAccountClientPage({ page }) {
                       <input disabled type="text" name="code_client" id="code_client" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Code client"/>
                     </div>
                   </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="prenom" className="block text-sm font-medium leading-6 text-gray-900">Prénom <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input required type="text" name="prenom" id="prenom" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Prénom" value={formData.prenom} onChange={handleInputChange} />
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="nom" className="block text-sm font-medium leading-6 text-gray-900">Nom <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input required type="text" name="nom" id="nom" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Nom" value={formData.nom} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="adresse" className="block text-sm font-medium leading-6 text-gray-900">Adresse</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input type="text" name="adresse" id="adresse" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Adresse" value={formData.adresse} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="code_postal" className="block text-sm font-medium leading-6 text-gray-900">Code Postal</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input type="text" name="code_postal" id="code_postal" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Code Postal" value={formData.code_postal} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="ville" className="block text-sm font-medium leading-6 text-gray-900">Ville <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input required type="text" name="ville" id="ville" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Ville" value={formData.ville} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="pays" className="block text-sm font-medium leading-6 text-gray-900">Pays</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input type="text" name="pays" id="pays" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Pays" value={formData.pays} onChange={handleInputChange}/>
-                    </div>
-                  </div>
+                  <FormAddClient name="prenom" label="Prénom" formData={formData.prenom} handleInputChange={handleInputChange} required/>
+                  <FormAddClient name="nom" label="Nom" formData={formData.nom} handleInputChange={handleInputChange} required/>
+                  <FormAddClient name="adresse" label="Adresse" formData={formData.adresse} handleInputChange={handleInputChange}/>
+                  <FormAddClient name="code_postal" label="Code Postal" formData={formData.code_postal} handleInputChange={handleInputChange}/>
+                  <FormAddClient name="ville" label="Ville" formData={formData.ville} handleInputChange={handleInputChange} required/>
+                  <FormAddClient name="pays" label="Pays" formData={formData.pays} handleInputChange={handleInputChange}/>
                 </div>
               </div>
               <div className="mt-4 overflow-hidden w-full sm:w-2/5 me-3 rounded-lg">
@@ -165,38 +124,11 @@ export function AddAccountClientPage({ page }) {
                   <p className="text-xl font-semibold text-gray-800">
                     Contact(s) client(e)
                   </p>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Courriel <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input required type="text" name="email" id="email" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Adresse Email" value={formData.email} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="telephone1" className="block text-sm font-medium leading-6 text-gray-900">Téléphone 1 <span className="text-red-500">*</span></label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input required type="text" name="telephone1" id="telephone1" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 1" value={formData.telephone1} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="telephone2" className="block text-sm font-medium leading-6 text-gray-900">Téléphone 2</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input type="text" name="telephone2" id="telephone2" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Téléphone 2" value={formData.telephone2} onChange={handleInputChange}/>
-                    </div>
-                  </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="fax" className="block text-sm font-medium leading-6 text-gray-900">Fax</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input type="text" name="fax" id="fax" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Fax" value={formData.fax} onChange={handleInputChange}/>
-                    </div>
-                  </div>
+                  <FormAddClient name="email" label="Courriel" formData={formData.email} handleInputChange={handleInputChange} required/>
+                  <FormAddClient name="telephone1" label="Téléphone 1" formData={formData.telephone1} handleInputChange={handleInputChange} required/>
+                  <FormAddClient name="telephone2" label="Téléphone 2" formData={formData.telephone2} handleInputChange={handleInputChange}/>
+                  <FormAddClient name="fax" label="Fax" formData={formData.fax} handleInputChange={handleInputChange}/>
+
                 </div>
               </div>
               <div className="mt-4 overflow-hidden w-full sm:w-2/5 me-3 rounded-lg bg-gray-100">
@@ -215,14 +147,7 @@ export function AddAccountClientPage({ page }) {
                       </select>
                     </div>
                   </div>
-                  <div className="mt-2 flex items-center">
-                    <div className="w-1/6">
-                      <label htmlFor="responsable" className="block text-sm font-medium leading-6 text-gray-900">Responsable</label>
-                    </div>
-                    <div className="mt-2 ml-5 w-1/6">
-                      <input disabled type="text" name="responsable" id="responsable" className="block w-50 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Nom du responsable" value={responsable}/>
-                    </div>
-                  </div>
+                  <FormAddClient name="responsable" label="Responsable" formData={responsable} />
                 </div>
               </div>
             </div>
