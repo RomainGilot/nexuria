@@ -11,7 +11,7 @@ import { TicketPage } from './pages/TicketPage/TicketPage';
 import { FacturePage } from './pages/FacturePage/FacturePage';
 import {UnknowPage} from './pages/UnknowPage/UnknowPage';
 import { AccountClientPage } from './pages/AccountClientPage/AccountClientPage';
-import { ModalAddClient } from './components/ModalAddClient/ModalAddClient';
+import { AddAccountClientPage } from './pages/AddAccountClientPage/AddAccountClientPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +21,7 @@ root.render(
           <Route path='/' element={<NavBar page={<HomePage/>}/>}/>
           <Route path='/clients' element={<NavBar page={<ClientPage/>}/>}/>
           <Route path='/clients/:id' element={<NavBar page={<AccountClientPage/>}/>}/>
+          <Route path='/clients/ajouter' element={<NavBar page={<AddAccountClientPage />}/>}/>
           <Route path='/projets' element={<NavBar page={<ProjetPage/>}/>}/>
           <Route path='/factures' element={<NavBar page={<FacturePage/>}/>}/>
           <Route path='/tickets' element={<NavBar page={<TicketPage/>}/>}/>

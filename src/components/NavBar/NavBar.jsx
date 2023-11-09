@@ -52,7 +52,7 @@ export default function NavBar({page}) {
               <div className="fixed inset-0 bg-gray-900/80" />
             </Transition.Child>
 
-            <div className="fixed inset-0 flex">
+            <div className="fixed inset-0 flex ">
               <Transition.Child
                 as={Fragment}
                 enter="transition ease-in-out duration-300 transform"
@@ -137,7 +137,7 @@ export default function NavBar({page}) {
         </Transition.Root>
 
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4 ">
             <div className="flex h-24 shrink-0 items-center">
               <img
                 className=" w-auto"
@@ -191,12 +191,12 @@ export default function NavBar({page}) {
           </div>
         </div>
 
-        <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 lg:mx-auto lg:px-8">
-            <div className="flex h-16 items-center gap-x-4  bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+        <div className="lg:pl-72 ">
+          <div className="sticky top-0 z-40 lg:mx-auto lg:px-8 bg-gray-100">
+            <div className="flex h-16 items-center gap-x-4 bg-gray-100 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
               <button
                 type="button"
-                className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+                className="-m-2.5 p-2.5 text-gray-700 lg:hidden "
                 onClick={() => setSidebarOpen(true)}
               >
                 <span className="sr-only">Open sidebar</span>
@@ -204,7 +204,7 @@ export default function NavBar({page}) {
               </button>
 
               {/* Separator */}
-              <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
+              <div className="h-6 w-px bg-gray-200 lg:hidden " aria-hidden="true" />
 
               <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                 <form className="relative flex flex-1" action="#" method="GET">
@@ -217,7 +217,7 @@ export default function NavBar({page}) {
                   />
                   <input
                     id="search-field"
-                    className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                    className="bg-gray-100 block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                     placeholder="Rechercher"
                     type="search"
                     name="search"

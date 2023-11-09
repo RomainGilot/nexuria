@@ -18,11 +18,28 @@ model Utilisateur {
 }
 
 model Client {
-  id        Int     @id @default(autoincrement())
+  code_client        Int     @id @default(autoincrement())
   prenom    String
   nom       String
-  entreprise String
   email     String
-  telephone String
+  telephone1 String
+  telephone2 String
+  fax String
+  adresse String
+  ville String
+  pays String
+  code_postal Int
+  id_entreprise Int
 }
 
+model Entreprise {
+  id                    Int       @id @default(autoincrement())
+  nom                   String
+  adresse               String
+  siret                 String
+  telephone             String?
+  formeJuridique        String
+  nomDirigeant          String
+  statutLegal           String
+  numeroEnregistrement  String?
+}

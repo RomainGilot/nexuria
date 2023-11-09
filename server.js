@@ -9,26 +9,35 @@ app.use(express.json());
 app.use(cors());
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Remplacez par l'URL de votre application React
+  origin: 'http://localhost:3000', 
 }));
 
-// Exemple d'une route pour récupérer tous les clients
 app.get('/clients', async (req, res) => {
   const clients = await prisma.client.findMany();
   res.json(clients);
 });
 
-// Exemple d'une route pour ajouter un client
+app.get('/entreprises', async (req, res) => {
+  const entreprises = await prisma.entreprise.findMany();
+  res.json(entreprises);
+});
+
 app.post('/clients', async (req, res) => {
-  const { prenom, nom, entreprise, email, telephone } = req.body;
+  const { prenom, nom, telephone1, telephone2, email, adresse, ville, pays, code_postal, fax, id_entreprise } = req.body;
   try {
    const newClient = await prisma.client.create({
       data: {
         nom: nom,
-        entreprise: entreprise,
+        prenom: prenom,
+        telephone1: telephone1,
+        telephone2: telephone2,
         email: email,
-        telephone: telephone,
-        prenom: prenom
+        adresse: adresse,
+        ville: ville,
+        pays: pays,
+        code_postal: code_postal,
+        fax: fax,
+        id_entreprise: id_entreprise,
       }
     })
     // Gérez la réponse ici, par exemple, renvoyez le nouveau client créé.
@@ -40,8 +49,23 @@ app.post('/clients', async (req, res) => {
   }
 });
 
+app.get('/clients/:id', async (req, res) => {
+  const { id } = req.params; // Récupérez l'ID du client à partir des paramètres d'URL
+  try {
+    const client = await prisma.client.findUnique({
+      where: { code_client: parseInt(id) } // Utilisez l'ID pour rechercher le client
+    });
 
-
+    if (client) {
+      res.json(client);
+    } else {
+      res.status(404).json({ message: 'Client non trouvé' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération du client :', error);
+    res.status(500).json({ message: 'Erreur serveur lors de la récupération du client' });
+  }
+});
 
 
 // Écoutez le serveur sur un port spécifique
